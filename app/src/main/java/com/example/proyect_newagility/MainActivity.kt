@@ -1,51 +1,88 @@
 package com.example.proyect_newagility
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
+import model.Screens
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = Intent(this, LoginScreen::class.java)
         setContent {
             Proyect_NewAgilityTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    FloatingActionButton(onClick = {startActivity(intent)}) {
-                    }
+                    Navigation()
                 }
             }
+        }
+    }
+
+
+}
+@Composable
+fun ScreenToMove(navigationController: NavController) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Botton")
+        Button(onClick = {
+            navigationController.navigate(Screens.LoginScreen.route)
+        }) {
+            Text(text = "Change")
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun Navigation(){
+    val navigationController = rememberNavController()
+    NavHost(navController = navigationController, startDestination = Screens.LoginScreen.route) {
+        composable(Screens.LoginScreen.route) {
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Proyect_NewAgilityTheme {
-        Greeting("Android")
+            MainLogin(navigationController)
+
+        }
+        composable(
+            Screens.Dashboard.route,
+            arguments = listOf(navArgument("name") { type = NavType.StringType })
+        ) {
+
+            DashboardLayout(navigationController, it.arguments?.getString("name").orEmpty())
+
+        }
+        composable(Screens.MainActivity.route) {
+
+            ScreenToMove(navigationController)
+
+        }
+        composable(Screens.CreateProyect.route) {
+            MainCreateProyect(navigationController)
+        }
+        composable(Screens.Lists.route) {
+            ListsProyectMain(navigationController)
+
+        }
     }
 }

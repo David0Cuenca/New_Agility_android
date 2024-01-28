@@ -1,7 +1,8 @@
 package com.example.proyect_newagility.ui.theme
 
-import android.app.Activity
 import android.os.Build
+import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -15,9 +16,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
+    primary = Primary,
+    secondary = Secundary,
     tertiary = Pink80
 )
 
@@ -55,11 +57,15 @@ fun Proyect_NewAgilityTheme(
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        if (!view.isInEditMode) {
+            SideEffect {
+                val window: Window? = (view.context as? AppCompatActivity)?.window
+                window?.statusBarColor = colorScheme.primary.toArgb()
+                val insetsController = window?.let { WindowCompat.getInsetsController(it, view) }
+                insetsController?.isAppearanceLightStatusBars = darkTheme
+            }
         }
+
     }
 
     MaterialTheme(
