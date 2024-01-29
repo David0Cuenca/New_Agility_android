@@ -98,9 +98,7 @@ fun BodyDashboard(modifier: Modifier){
                     imageVector = Icons.Default.ShoppingCart,
                     contentDescription = null,Modifier.size(150.dp))
                Column(modifier.align(Alignment.CenterVertically)) {
-                   Text(
-                       text = "Hay un total de trabajos: ",
-                   )
+                   Text(text = "Hay un total de trabajos: ")
                    Text(text = "10")
                }
 

@@ -185,8 +185,6 @@ fun PreviewCreateProyect(){
         HeaderCreate(modifier = Modifier.align(Alignment.TopEnd))
         BodyCreate(modifier = Modifier.align(Alignment.Center))
     }
-
-
 }
 
 

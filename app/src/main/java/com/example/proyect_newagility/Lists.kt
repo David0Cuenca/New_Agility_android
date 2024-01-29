@@ -1,10 +1,11 @@
 package com.example.proyect_newagility
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,8 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -25,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
 import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
 import model.ProyectDetails
@@ -53,7 +59,9 @@ fun ListsProyectMain(navController: NavController) {
         .fillMaxSize()
         .background(color = Primary)
         .padding(9.dp)){
+
         ListsBody(modifier = Modifier.align(Alignment.Center))
+
     }
 
 
@@ -72,84 +80,36 @@ fun ListsBody(modifier: Modifier){
 
             LazyColumn (modifier
                 .fillMaxWidth(),
-                state = rvStater,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                state = rvStater
             ){
 
                 items(getProyectDetails()) {
                     ItemProyect(it){
-
-                    /*Card (
-                        modifier
-                            .fillMaxWidth()
-                            .padding(5.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Blue)
-                    ){
-                        Column(modifier
-                            .padding(8.dp)) {
-                                Text(text = "Nombre del proyecto: $it")
-                                Spacer()
-                                Text(text = "")
-                        }*/
+                        Toast.makeText(context, it.name, Toast.LENGTH_LONG).show()
                     }
                 }
             }
         }
-
-
-   /* nameList: Array<String>,
-    endDate: Array<String>
-) {
-
-    LazyColumn(contentPadding = PaddingValues(8.dp)){
-        val itemCount = nameList.size
-        items(itemCount){
-            ColumnItem(
-                modifier = Modifier,
-                title = names,
-                endDate = enDates,
-                itemIndex = it
-            )
-        }
-    }*/
-
 }
 
 @Composable
 fun ItemProyect(proyectdetails: ProyectDetails, onItemSelected: (ProyectDetails) -> Unit) {
+    Card(colors = CardDefaults.cardColors(containerColor = Blue),
+        shape = RoundedCornerShape(4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onItemSelected(proyectdetails) }){
 
-}
-/*
-@Composable
-fun ColumnItem(
-    modifier: Modifier,
-    name: Array<String>,
-    endDate: Array<String>,
-    itemIndex: Int) {
+        Column (modifier = Modifier.align(Alignment.CenterHorizontally).padding(9.dp)){
+            Text(text = proyectdetails.name)
+            Spacer()
+            Text(text = proyectdetails.endDate)
 
-    Card(
-        modifier
-            .padding(10.dp)
-            .wrapContentSize(),
-        colors = CardDefaults.cardColors(
-            contentColor = Blue
-        ), elevation = CardDefaults.cardElevation(10.dp)
-    ) {
-        Row (
-            modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ){
-            Column (modifier.padding(10.dp)) {
-                Text(text = name[itemIndex])
-                Text(text = endDate[itemIndex])
-            }
         }
-    }
 
-}*/
+
+    }
+}
 
 fun getProyectDetails(): List<ProyectDetails> {
     return listOf(
