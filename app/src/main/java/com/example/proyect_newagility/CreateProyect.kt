@@ -81,7 +81,7 @@ fun BodyCreate(modifier: Modifier, navController: NavController) {
 fun BtnConfirmCreate(navController: NavController) {
     OutlinedButton(
         onClick = {
-            navController.navigate(Screens.LoginScreen.route)
+            navController.navigate(Screens.Dashboard.route)
         })
     {
         Text(text = "Crear Proyecto", color=Blue)

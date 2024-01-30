@@ -42,21 +42,6 @@ class MainActivity : ComponentActivity() {
 
 
 }
-@Composable
-fun ScreenToMove(navigationController: NavController) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Botton")
-        Button(onClick = {
-            navigationController.navigate(Screens.LoginScreen.route)
-        }) {
-            Text(text = "Change")
-        }
-    }
-}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -66,25 +51,16 @@ fun Navigation(){
         composable(Screens.LoginScreen.route) {
             MainLogin(navigationController)
         }
-        composable(
-            Screens.Dashboard.route,
-            arguments = listOf(navArgument("name") { type = NavType.StringType })
-        ) {
-
-            DashboardLayout(navigationController, it.arguments?.getString("name").orEmpty())
-
-        }
-        composable(Screens.MainActivity.route) {
-
-            ScreenToMove(navigationController)
-
+        composable(Screens.Dashboard.route,
+            /*arguments = listOf(navArgument("name") { type = NavType.StringType }*/
+           ) {
+            DashboardLayout(navigationController/*, it.arguments?.getString("name").orEmpty()*/)
         }
         composable(Screens.CreateProyect.route) {
             MainCreateProyect(navigationController)
         }
         composable(Screens.Lists.route) {
             ListsProyectMain(navigationController)
-
         }
     }
 }
