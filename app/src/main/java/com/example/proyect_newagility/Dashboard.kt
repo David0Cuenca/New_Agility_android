@@ -1,9 +1,10 @@
 package com.example.proyect_newagility
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,40 +18,30 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
-import kotlinx.coroutines.launch
+import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
+import model.Screens
 
-class Dashboard : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard )
-    }
-
-}
 @Composable
-fun DashboardLayout(navigationController: NavController, userName: String){
+fun DashboardLayout(navigationController: NavHostController, orEmpty: String) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Primary)
@@ -58,17 +49,12 @@ fun DashboardLayout(navigationController: NavController, userName: String){
     ){
         Navbar(modifier = Modifier.align(Alignment.TopCenter))
         BodyDashboard(modifier = Modifier.align(Alignment.Center))
-        Footer(modifier = Modifier.align(Alignment.BottomEnd))
+        Footer(modifier = Modifier.align(Alignment.BottomEnd),navigationController)
     }
 }
-
 @Composable
 fun Navbar(modifier: Modifier){
-
-    TopBarNav {
-
-    }
-
+    TopBarNav { }
 }
 @Composable
 fun BodyDashboard(modifier: Modifier){
@@ -81,7 +67,7 @@ fun BodyDashboard(modifier: Modifier){
            containerColor = Blue
        )) {
        Column (modifier.padding(15.dp)){
-           Row (){
+           Row {
                Icon(
                    imageVector = Icons.Default.DateRange,
                    contentDescription = null)
@@ -108,11 +94,11 @@ fun BodyDashboard(modifier: Modifier){
 }
 
 @Composable
-fun Footer(modifier: Modifier) {
+fun Footer(modifier: Modifier,navigationController: NavHostController) {
     Box(modifier
         .fillMaxWidth()) {
         FloatingActionButton(
-            onClick = { /*TODO*/ },
+            onClick = { navigationController.navigate(Screens.CreateProyect.route) },
             modifier.align(Alignment.BottomEnd),
             containerColor = Blue,
         ) {
@@ -122,30 +108,7 @@ fun Footer(modifier: Modifier) {
 
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Composable
-fun ScaffoldTop() {
-    val scope = rememberCoroutineScope()
-    var drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                MyNavigationDrawer() { scope.launch { drawerState.close() } }
-            }
-        },
-        gesturesEnabled = true
-    ) {
-        Scaffold(
-            topBar = { TopBarNav() { scope.launch { drawerState.open() } } },
-            content = { Text(text = "Hello") }
-        )
-    }
-}
 
-
-
-/*
 @Composable
 fun MyNavigationDrawer(onCloseDrawer: () -> Unit) {
     Column(modifier = Modifier.padding(8.dp)) {
@@ -160,7 +123,6 @@ fun MyNavigationDrawer(onCloseDrawer: () -> Unit) {
         }
     }
 }
-*/
 
 
 //Preview

@@ -1,9 +1,6 @@
 package com.example.proyect_newagility
 
 import android.os.Build
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,9 +15,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -39,33 +34,21 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
-import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
+import model.Screens
 import java.time.Instant
 import java.time.ZoneId
 
-class CreateProyect : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            Proyect_NewAgilityTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    PreviewCreateProyect()
-                }
-            }
-        }
-    }
-}
-
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainCreateProyect(navController: NavController){
 
-
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(color = Primary)
+        .padding(8.dp)){
+        HeaderCreate(modifier = Modifier.align(Alignment.TopEnd))
+        BodyCreate(modifier = Modifier.align(Alignment.Center),navController)
+    }
 
 }
 
@@ -84,21 +67,21 @@ fun HeaderCreate(modifier: Modifier) {
 //Body
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BodyCreate(modifier: Modifier) {
+fun BodyCreate(modifier: Modifier, navController: NavController) {
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         NameCreate()
         Spacer()
         DatePickerUtility()
         Spacer()
-        BtnConfirmCreate()
+        BtnConfirmCreate(navController)
     }
 }
 
 @Composable
-fun BtnConfirmCreate() {
+fun BtnConfirmCreate(navController: NavController) {
     OutlinedButton(
         onClick = {
-            /*navigationController.navigate(Screens.LoginScreen.route)*/
+            navController.navigate(Screens.LoginScreen.route)
         })
     {
         Text(text = "Crear Proyecto", color=Blue)
@@ -173,6 +156,7 @@ fun DatePickerUtility() {
 }
 
 
+/*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @Preview
@@ -183,8 +167,9 @@ fun PreviewCreateProyect(){
         .background(color = Primary)
         .padding(8.dp)){
         HeaderCreate(modifier = Modifier.align(Alignment.TopEnd))
-        BodyCreate(modifier = Modifier.align(Alignment.Center))
+        BodyCreate(modifier = Modifier.align(Alignment.Center), navController = )
     }
 }
+*/
 
 

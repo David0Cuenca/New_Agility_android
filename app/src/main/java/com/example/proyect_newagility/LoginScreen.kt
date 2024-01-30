@@ -39,12 +39,6 @@ import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
 import model.Screens
 
-class LoginScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_screen)
-    }
-}
 
 @Composable
 fun MainLogin(navigationController: NavController){
@@ -150,7 +144,7 @@ fun BtnConfirm(navigationController: NavController) {
 
     OutlinedButton(
         onClick = {
-            navigationController.navigate(Screens.LoginScreen.route)
+            navigationController.navigate(Screens.Dashboard.route)
         })
     {
         Text(text = "Iniciar Sesion", color=Blue)

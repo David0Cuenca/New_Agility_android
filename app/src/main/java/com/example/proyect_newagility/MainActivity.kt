@@ -1,8 +1,10 @@
 package com.example.proyect_newagility
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +25,7 @@ import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
 import model.Screens
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -55,14 +58,13 @@ fun ScreenToMove(navigationController: NavController) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Navigation(){
     val navigationController = rememberNavController()
     NavHost(navController = navigationController, startDestination = Screens.LoginScreen.route) {
         composable(Screens.LoginScreen.route) {
-
             MainLogin(navigationController)
-
         }
         composable(
             Screens.Dashboard.route,
