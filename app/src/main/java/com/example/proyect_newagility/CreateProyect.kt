@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
 import model.Screens
@@ -81,10 +82,11 @@ fun BodyCreate(modifier: Modifier, navController: NavController) {
 fun BtnConfirmCreate(navController: NavController) {
     OutlinedButton(
         onClick = {
+
             navController.navigate(Screens.Dashboard.route)
         })
     {
-        Text(text = "Crear Proyecto", color=Blue)
+        Text(text = "Crear Proyecto", color= Color.White)
     }
 }
 
@@ -102,11 +104,10 @@ fun NameCreate(){
         singleLine = true,
         label = { Text("Nombre del Proyecto") },
         colors = TextFieldDefaults.colors(
-            disabledTextColor = Blue,
-            focusedContainerColor = Color.Gray,
+            focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.Transparent,
-            unfocusedLabelColor = Blue,
-            focusedLabelColor = Color.Black,
+            unfocusedLabelColor = Color.White,
+            focusedLabelColor = Color.White,
 
             ),
         modifier = Modifier.fillMaxWidth(),
@@ -127,7 +128,7 @@ fun DatePickerUtility() {
         onClick = {
             showDialoge = true
         }) {
-        Text(text = "Fecha final del proyecto", color=Blue)
+        Text(text = "Fecha final del proyecto", color= Color.White)
     }
     if(showDialoge) {
         DatePickerDialog(
@@ -137,7 +138,7 @@ fun DatePickerUtility() {
                     onClick = {
                         showDialoge = false
                     }) {
-                    Text(text = "Mostrar Fecha")
+                    Text(text = "Mostrar Fecha", color = Color.White)
                 }
             })
         {
@@ -154,5 +155,9 @@ fun DatePickerUtility() {
     }
 
 }
-
-
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+fun MainCreateProyectPreview(){
+    MainCreateProyect(navController = rememberNavController())
+}
