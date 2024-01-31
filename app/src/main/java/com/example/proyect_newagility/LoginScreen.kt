@@ -1,7 +1,5 @@
 package com.example.proyect_newagility
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -35,8 +31,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
 import model.Screens
@@ -72,11 +70,11 @@ fun Header(modifier: Modifier,navigationController: NavController) {
 fun Body(modifier: Modifier, navigationController: NavController) {
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         ImageLogo(modifier)
-        Spacer()
+        SpacerGeneral()
         User()
-        Spacer()
+        SpacerGeneral()
         Password()
-        Spacer()
+        SpacerGeneral()
         BtnConfirm(navigationController)
     }
 }
@@ -100,17 +98,18 @@ fun User(){
         value = user,
         onValueChange = { user = it },
         maxLines = 1,
+        modifier = Modifier.fillMaxWidth(),
         singleLine = true,
         label = {Text("Usuario")},
         colors = TextFieldDefaults.colors(
-            disabledTextColor = Blue,
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
-            disabledLabelColor = Color.Blue,
             focusedLabelColor = Color.White,
-
+            focusedIndicatorColor = Blue,
+            unfocusedIndicatorColor = Blue,
+            unfocusedLabelColor = Blue
         ),
-        modifier = Modifier.fillMaxWidth(),
+
     )
 
 }
@@ -126,15 +125,18 @@ fun Password(){
         singleLine = true,
         label = { Text("Contraseña")},
         colors = TextFieldDefaults.colors(
-            disabledTextColor = Blue,
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
-            disabledLabelColor = Color.Blue,
-            focusedLabelColor = Color.White))
+            focusedLabelColor = Color.White,
+            focusedIndicatorColor = Color.White,
+            unfocusedIndicatorColor = Blue,
+            unfocusedLabelColor = Blue
+        )
+    )
 }
 
 @Composable
-fun Spacer(){
+fun SpacerGeneral(){
     Spacer(modifier = Modifier.size(20.dp))
 }
 
@@ -148,4 +150,9 @@ fun BtnConfirm(navigationController: NavController) {
     {
         Text(text = "Iniciar Sesion", color=Blue)
     }
+}
+@Preview
+@Composable
+fun ShowLogin(){
+    MainLogin(navigationController = rememberNavController())
 }

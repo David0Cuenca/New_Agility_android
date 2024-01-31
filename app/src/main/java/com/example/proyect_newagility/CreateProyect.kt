@@ -71,9 +71,9 @@ fun HeaderCreate(modifier: Modifier) {
 fun BodyCreate(modifier: Modifier, navController: NavController) {
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         NameCreate()
-        Spacer()
+        SpacerGeneral()
         DatePickerUtility()
-        Spacer()
+        SpacerGeneral()
         BtnConfirmCreate(navController)
     }
 }
@@ -148,7 +148,7 @@ fun DatePickerUtility() {
 
     val date = stateDataPicker.selectedDateMillis
     date?.let {
-        Spacer()
+        SpacerGeneral()
         val localDate = Instant.ofEpochMilli(it).atZone(ZoneId.of("UTC")).toLocalDate()
         Text(text = "Fecha Seleccionada: ${localDate.dayOfMonth}/${localDate.monthValue}/${localDate.year}",
             color = Blue)
