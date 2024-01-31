@@ -4,8 +4,9 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,38 +17,77 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
-import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
 import com.example.proyect_newagility.ui.theme.Typography
+import kotlinx.coroutines.launch
 import model.ProyectDetails
 
 @Composable
-fun ListsLayout(navController: NavController) {
+fun ListsLayout(navController: NavController, drawerState: DrawerState) {
 
-    Box(modifier = Modifier
+  ScaffoldList(navigationController = navController,drawerState)
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ScaffoldList(navigationController: NavController,drawerState: DrawerState){
+    val scope = rememberCoroutineScope()
+    Scaffold(
+        topBar = {
+            TopBarList() {scope.launch { drawerState.open() }}},
+        content = {innerPadding ->
+            BodyList(innerPadding)
+        }
+    )
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarList(onClickDrawer: () -> Unit) {
+    TopAppBar(
+        title = { Text("Lista de Proyectos") },
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = Primary,
+            actionIconContentColor = Color.White,
+            titleContentColor = Color.White),
+        navigationIcon = {
+            IconButton(onClick = { onClickDrawer() }) {
+                Icon(Icons.Filled.Menu,
+                    contentDescription = "Desc",
+                    tint = Color.White)
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun BodyList(innerPaddingValues: PaddingValues){
+    Column(modifier = Modifier
         .fillMaxSize()
-        .background(color = Primary)
-        .padding(9.dp)){
-        Header(modifier=Modifier.align(Alignment.TopEnd), navigationController = navController)
-        ListsBody(modifier = Modifier.align(Alignment.Center))
-
+        .padding(innerPaddingValues),
+        verticalArrangement = Arrangement.spacedBy(15.dp)) {
+        ListsBody(Modifier.fillMaxWidth())
     }
 }
 
@@ -62,13 +102,6 @@ fun ListsBody(modifier: Modifier){
             .background(color = Color.Transparent),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Lista de Proyectos",
-                style = Typography.titleLarge,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                modifier =Modifier.padding(10.dp)
-            )
             LazyColumn (modifier
                 .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -140,10 +173,12 @@ fun getProyectDetails(): List<ProyectDetails> {
     )
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun ListsPreview() {
     Proyect_NewAgilityTheme {
-        ListsLayout(navController = rememberNavController())
+        ListsLayout(navController = rememberNavController(), drawerState = DrawerValue)
     }
 }
+*/
