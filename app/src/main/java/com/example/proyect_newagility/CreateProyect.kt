@@ -156,20 +156,3 @@ fun DatePickerUtility() {
 }
 
 
-/*
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-@Preview
-fun PreviewCreateProyect(){
-
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Primary)
-        .padding(8.dp)){
-        HeaderCreate(modifier = Modifier.align(Alignment.TopEnd))
-        BodyCreate(modifier = Modifier.align(Alignment.Center), navController = )
-    }
-}
-*/
-
-

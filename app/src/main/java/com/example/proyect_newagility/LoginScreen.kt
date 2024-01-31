@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -48,20 +50,20 @@ fun MainLogin(navigationController: NavController){
             .background(color = Primary)
             .padding(9.dp)
     ){
-        Header(modifier = Modifier.align(Alignment.TopEnd))
+        Header(modifier = Modifier.align(Alignment.TopEnd),navigationController)
         Body(modifier = Modifier.align(Alignment.Center), navigationController)
     }
 }
 
 //Head
 @Composable
-fun Header(modifier: Modifier) {
+fun Header(modifier: Modifier,navigationController: NavController) {
     Box (modifier){
         val activity = LocalContext.current as? AppCompatActivity
         Icon(imageVector = ImageVector.vectorResource(R.drawable.x),
             contentDescription = "Close App",
             tint = Blue,
-            modifier = Modifier.clickable { activity?.finish() })
+            modifier = Modifier.clickable { navigationController.navigate(Screens.Dashboard.route)})
     }
 }
 
@@ -96,7 +98,7 @@ fun User(){
     var user by rememberSaveable { mutableStateOf("") }
     TextField(
         value = user,
-        onValueChange ={ user = it },
+        onValueChange = { user = it },
         maxLines = 1,
         singleLine = true,
         label = {Text("Usuario")},
@@ -105,11 +107,10 @@ fun User(){
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
             disabledLabelColor = Color.Blue,
-            focusedLabelColor = Color.Blue,
+            focusedLabelColor = Color.White,
 
         ),
         modifier = Modifier.fillMaxWidth(),
-
     )
 
 }
@@ -123,15 +124,13 @@ fun Password(){
         modifier = Modifier.fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
-/*        leadingIcon = painterResource(id = R.drawable.user),*/
-        label = {Text("Contraseña")},
+        label = { Text("Contraseña")},
         colors = TextFieldDefaults.colors(
             disabledTextColor = Blue,
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
             disabledLabelColor = Color.Blue,
-            focusedLabelColor = Color.Blue,))
-
+            focusedLabelColor = Color.White))
 }
 
 @Composable

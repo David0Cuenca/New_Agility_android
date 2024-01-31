@@ -1,17 +1,11 @@
 package com.example.proyect_newagility
 
-import android.os.Build
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,11 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -41,17 +32,17 @@ import androidx.navigation.compose.rememberNavController
 import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Primary
 import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
-import kotlinx.coroutines.launch
+import com.example.proyect_newagility.ui.theme.Typography
 import model.ProyectDetails
 
 @Composable
-fun ListsProyectMain(navController: NavController) {
+fun ListsLayout(navController: NavController) {
 
     Box(modifier = Modifier
         .fillMaxSize()
         .background(color = Primary)
         .padding(9.dp)){
-        Header(modifier = Modifier.align(Alignment.TopEnd))
+        Header(modifier=Modifier.align(Alignment.TopEnd), navigationController = navController)
         ListsBody(modifier = Modifier.align(Alignment.Center))
 
     }
@@ -100,11 +91,12 @@ fun ItemProyect(proyectdetails: ProyectDetails, onItemSelected: (ProyectDetails)
             .clickable { onItemSelected(proyectdetails) }){
 
         Column (modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(9.dp)){
-            Text(text = proyectdetails.name)
+            .fillMaxWidth()
+            .padding(9.dp),
+            horizontalAlignment = Alignment.CenterHorizontally){
+            Text(text = proyectdetails.name, style = Typography.titleMedium, color = Color.Black)
             Spacer()
-            Text(text = proyectdetails.endDate)
+            Text(text = proyectdetails.endDate, style = Typography.bodyLarge, color = Color.Black)
 
         }
 
@@ -125,6 +117,6 @@ fun getProyectDetails(): List<ProyectDetails> {
 @Composable
 fun ListsPreview() {
     Proyect_NewAgilityTheme {
-        ListsProyectMain(navController = rememberNavController())
+        ListsLayout(navController = rememberNavController())
     }
 }
