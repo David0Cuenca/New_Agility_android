@@ -40,11 +40,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
 import kotlinx.coroutines.launch
 import model.NavigationItem
@@ -89,12 +87,10 @@ fun MainApp(){
             }
             composable(
                 Screens.Dashboard.route,
-                arguments = listOf(navArgument("user") {type = NavType.StringType})
                 ) {
                 DashboardLayout(
                     navigationController,
-                    drawerState,
-                    it.arguments?.getString("user").orEmpty()
+                    drawerState
                 )
             }
             composable(Screens.CreateProyect.route) {

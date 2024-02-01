@@ -53,21 +53,20 @@ import model.getProyectDetails
 @Composable
 fun DashboardLayout(
     navigationController: NavHostController,
-    drawerState: DrawerState,
-    username: String
+    drawerState: DrawerState
 ) {
-    ScaffoldMain(navigationController,drawerState,username)
+    ScaffoldMain(navigationController,drawerState)
 }
 
 @Composable
-fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerState,username: String){
+fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerState){
     val scope = rememberCoroutineScope()
 
         Scaffold(
             topBar = {
                 TopBarNav {scope.launch { drawerState.open() }}},
             content = {innerPadding ->
-                BodyDashboard(innerPadding,username)
+                BodyDashboard(innerPadding)
             },
             floatingActionButton = {
                 FooterDashboard (
@@ -79,7 +78,7 @@ fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerStat
 
 
 @Composable
-fun BodyDashboard(innerPaddingValues: PaddingValues, username: String){
+fun BodyDashboard(innerPaddingValues: PaddingValues){
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -89,7 +88,7 @@ fun BodyDashboard(innerPaddingValues: PaddingValues, username: String){
         horizontalAlignment = Alignment.CenterHorizontally){
 
         Text(
-            text = "Bienvenido $username",
+            text = "Bienvenido Username  ",
             modifier = Modifier.padding(bottom = 10.dp),
             style = Typography.titleMedium,
             fontSize = 30.sp,
@@ -99,6 +98,7 @@ fun BodyDashboard(innerPaddingValues: PaddingValues, username: String){
         ) {
             CardTotal()
             CardCalendar()
+            CardPriority()
         }
     }
 }
@@ -199,5 +199,5 @@ fun TopBarNav(onClickDrawer: () -> Unit) {
 @Composable
 fun DashboardPreview() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-        ScaffoldMain(navigationController= rememberNavController(), drawerState = drawerState, username = "us")
+        ScaffoldMain(navigationController= rememberNavController(), drawerState = drawerState)
     }
