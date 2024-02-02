@@ -32,7 +32,7 @@ fun getProyectDetails(): List<ProyectDetails> {
         ProyectDetails("Lidel", "14/12/2022", ProjectType.PERSONAL, 5),
         ProyectDetails("Aldi", "15/12/2022", ProjectType.PROTOTIPO, null),
         ProyectDetails("Venezuela", "16/12/2023", ProjectType.CONCEPTUAL, 7),
-        ProyectDetails("Clase", "16/1/2023", ProjectType.OTROS, 3),
+        ProyectDetails("Clase", "16/01/2023", ProjectType.OTROS, 3),
         ProyectDetails("Investigacion", "16/10/2024", ProjectType.GRUPAL, 9),
         ProyectDetails("Regetton 2", "16/12/2024", ProjectType.PERSONAL, null)
     )

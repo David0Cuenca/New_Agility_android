@@ -68,14 +68,15 @@ fun Header(modifier: Modifier,navigationController: NavController) {
 //Body
 @Composable
 fun Body(modifier: Modifier, navigationController: NavController) {
+    var user by rememberSaveable { mutableStateOf("Ele") }
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         ImageLogo(modifier)
         SpacerGeneral()
-        User()
+        User(user){user = it}
         SpacerGeneral()
         Password()
         SpacerGeneral()
-        BtnConfirm(navigationController)
+        BtnConfirm(navigationController,user)
     }
 }
 //Body Components
@@ -92,11 +93,10 @@ fun ImageLogo(modifier: Modifier) {
 
 
 @Composable
-fun User(){
-    var user by rememberSaveable { mutableStateOf("") }
+fun User(user: String, onTextChanged: (String) -> Unit){
     TextField(
         value = user,
-        onValueChange = { user = it },
+        onValueChange = { onTextChanged(it) },
         maxLines = 1,
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
@@ -141,11 +141,11 @@ fun SpacerGeneral(){
 }
 
 @Composable
-fun BtnConfirm(navigationController: NavController) {
+fun BtnConfirm(navigationController: NavController,user: String) {
 
     OutlinedButton(
         onClick = {
-            navigationController.navigate(Screens.Dashboard.route)
+            navigationController.navigate(Screens.Dashboard.createRoute(user))
         })
     {
         Text(text = "Iniciar Sesion", color=Blue)

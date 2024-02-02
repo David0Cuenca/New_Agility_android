@@ -45,6 +45,7 @@ import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Pink
 import com.example.proyect_newagility.ui.theme.Primary
 import com.example.proyect_newagility.ui.theme.Typography
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import model.Screens
 import model.getProyectDetails
@@ -53,20 +54,22 @@ import model.getProyectDetails
 @Composable
 fun DashboardLayout(
     navigationController: NavHostController,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    user: String
 ) {
-    ScaffoldMain(navigationController,drawerState)
+    ScaffoldMain(navigationController,drawerState,user)
 }
 
 @Composable
-fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerState){
+fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerState,user:String){
     val scope = rememberCoroutineScope()
 
         Scaffold(
             topBar = {
-                TopBarNav {scope.launch { drawerState.open() }}},
+                TopBarNav(onClickDrawer = { scope.launch { drawerState.open() } })
+                     },
             content = {innerPadding ->
-                BodyDashboard(innerPadding)
+                BodyDashboard(innerPadding, user)
             },
             floatingActionButton = {
                 FooterDashboard (
@@ -78,7 +81,7 @@ fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerStat
 
 
 @Composable
-fun BodyDashboard(innerPaddingValues: PaddingValues){
+fun BodyDashboard(innerPaddingValues: PaddingValues,user: String){
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -88,7 +91,7 @@ fun BodyDashboard(innerPaddingValues: PaddingValues){
         horizontalAlignment = Alignment.CenterHorizontally){
 
         Text(
-            text = "Bienvenido Username  ",
+            text = "Bienvenido $user",
             modifier = Modifier.padding(bottom = 10.dp),
             style = Typography.titleMedium,
             fontSize = 30.sp,
@@ -199,5 +202,5 @@ fun TopBarNav(onClickDrawer: () -> Unit) {
 @Composable
 fun DashboardPreview() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-        ScaffoldMain(navigationController= rememberNavController(), drawerState = drawerState)
+        ScaffoldMain(navigationController= rememberNavController(), drawerState = drawerState, user = "ele")
     }

@@ -40,9 +40,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
 import kotlinx.coroutines.launch
 import model.NavigationItem
@@ -71,6 +73,7 @@ fun MainApp(){
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navigationController = rememberNavController()
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -87,10 +90,12 @@ fun MainApp(){
             }
             composable(
                 Screens.Dashboard.route,
+                arguments = listOf(navArgument("user"){type= NavType.StringType})
                 ) {
                 DashboardLayout(
                     navigationController,
-                    drawerState
+                    drawerState,
+                    it.arguments?.getString("user").orEmpty()
                 )
             }
             composable(Screens.CreateProyect.route) {
