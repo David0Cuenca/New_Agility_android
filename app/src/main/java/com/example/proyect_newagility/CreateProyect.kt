@@ -54,6 +54,7 @@ import com.example.proyect_newagility.ui.theme.Primary
 import com.example.proyect_newagility.ui.theme.Typography
 import model.ProjectType
 import model.Screens
+import model.Usersingleton
 import java.time.Instant
 import java.time.ZoneId
 
@@ -79,7 +80,7 @@ fun HeaderCreate(modifier: Modifier,navController: NavController) {
         Icon(imageVector = Icons.Default.Close,
             contentDescription = "Close App",
             tint = Blue,
-            modifier = Modifier.clickable { navController.navigate(Screens.Dashboard.route) })
+            modifier = Modifier.clickable { navController.navigate(Screens.Dashboard.createRoute(Usersingleton.getUserValue())) })
     }
 }
 
@@ -105,7 +106,7 @@ fun BodyCreate(modifier: Modifier, navController: NavController) {
 fun BtnConfirmCreate(navController: NavController) {
     OutlinedButton(
         onClick = {
-            navController.navigate(Screens.Dashboard.route)
+            navController.navigate(Screens.Dashboard.createRoute(Usersingleton.getUserValue()))
         })
     {
         Icon(
