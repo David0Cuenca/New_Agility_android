@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
@@ -35,8 +37,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -49,6 +49,7 @@ import com.example.proyect_newagility.ui.theme.Proyect_NewAgilityTheme
 import kotlinx.coroutines.launch
 import model.NavigationItem
 import model.Screens
+import model.Usersingleton
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -84,51 +85,68 @@ fun MainApp(){
         },
         gesturesEnabled = true,
         content = {
-            NavHost(navController = navigationController, startDestination = Screens.LoginScreen.route) {
-            composable(Screens.LoginScreen.route) {
-                MainLogin(navigationController)
-            }
-            composable(
-                Screens.Dashboard.route,
-                arguments = listOf(navArgument("user"){type= NavType.StringType})
+                NavHost(navController = navigationController, startDestination = Screens.LoginScreen.route) {
+
+                composable(
+                    Screens.LoginScreen.route
                 ) {
-                DashboardLayout(
-                    navigationController,
-                    drawerState,
-                    it.arguments?.getString("user").orEmpty()
-                )
+                    MainLogin(navigationController)
+                }
+                composable(
+                    Screens.Dashboard.route,
+                    arguments = listOf(navArgument("user"){type= NavType.StringType})
+                    ) {
+                    DashboardLayout(
+                        navigationController,
+                        drawerState,
+                        it.arguments?.getString("user").orEmpty()
+                    )
+                }
+                composable(
+                    Screens.CreateProyect.route
+                ) {
+                    MainCreateProyect(navigationController)
+                }
+                composable(
+                    Screens.Lists.route
+                ) {
+                    ListsLayout(navigationController,drawerState)
+                }
+                composable(
+                    Screens.User.route
+                ) {
+                    UserLayout(navigationController, drawerState)
+                }
             }
-            composable(Screens.CreateProyect.route) {
-                MainCreateProyect(navigationController)
-            }
-            composable(Screens.Lists.route) {
-                ListsLayout(navigationController,drawerState)
-            }
-        }
         }
     )
 }
 
 @Composable
 fun ModalDrawerItems(navigationController: NavHostController, onCloseDrawer:() -> Unit) {
-    val scope = rememberCoroutineScope()
+    val UserNow = Usersingleton.getUserValue()
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
 
     val items = listOf(
         NavigationItem(
-            title = "Dasboard",
+            title = "Dashboard",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
-            destination = Screens.Dashboard.route
+            destination = Screens.Dashboard.createRoute(UserNow)
         ),
         NavigationItem(
-            title = "Lists",
+            title = "Listas",
             selectedIcon = Icons.Filled.List,
             unselectedIcon = Icons.Outlined.List,
             destination = Screens.Lists.route
-        )
+        ),
+        NavigationItem(
+            title = "Ajustes de Usuario",
+            selectedIcon = Icons.Filled.Settings,
+            unselectedIcon = Icons.Outlined.Settings,
+            destination = Screens.User.route)
     )
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -138,9 +156,7 @@ fun ModalDrawerItems(navigationController: NavHostController, onCloseDrawer:() -
         verticalAlignment = Alignment.CenterVertically){
         ImageLogo(modifier = Modifier)
         Text(text = "New Agility",
-            fontSize = 40.sp,
-            fontFamily = FontFamily.Serif,
-            color = Color.White)
+            fontSize = 40.sp)
     }
     Divider()
     SpacerGeneral()

@@ -7,4 +7,5 @@ sealed class Screens (val route: String) {
     }
     object CreateProyect:Screens("create_proyect")
     object Lists:Screens("lists")
+    object User:Screens("User")
 }

@@ -20,7 +20,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -30,24 +29,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.proyect_newagility.ui.theme.Blue
 import com.example.proyect_newagility.ui.theme.Pink
 import com.example.proyect_newagility.ui.theme.Primary
 import com.example.proyect_newagility.ui.theme.Typography
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import model.Screens
+import model.Usersingleton
 import model.getProyectDetails
 
 
@@ -57,13 +53,20 @@ fun DashboardLayout(
     drawerState: DrawerState,
     user: String
 ) {
-    ScaffoldMain(navigationController,drawerState,user)
+    Usersingleton.setUser(user)
+    val UserNow = Usersingleton.getUserValue()
+
+
+    ScaffoldMain(navigationController,drawerState,UserNow)
 }
 
 @Composable
-fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerState,user:String){
+fun ScaffoldMain(
+    navigationController: NavHostController,
+    drawerState: DrawerState,
+    user: String
+){
     val scope = rememberCoroutineScope()
-
         Scaffold(
             topBar = {
                 TopBarNav(onClickDrawer = { scope.launch { drawerState.open() } })
@@ -81,7 +84,7 @@ fun ScaffoldMain(navigationController: NavHostController,drawerState: DrawerStat
 
 
 @Composable
-fun BodyDashboard(innerPaddingValues: PaddingValues,user: String){
+fun BodyDashboard(innerPaddingValues: PaddingValues, user: String){
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -91,7 +94,7 @@ fun BodyDashboard(innerPaddingValues: PaddingValues,user: String){
         horizontalAlignment = Alignment.CenterHorizontally){
 
         Text(
-            text = "Bienvenido $user",
+            text = "Bienvenido ${user.capitalize()}",
             modifier = Modifier.padding(bottom = 10.dp),
             style = Typography.titleMedium,
             fontSize = 30.sp,
@@ -198,9 +201,11 @@ fun TopBarNav(onClickDrawer: () -> Unit) {
 
 
 
+/*
 @Preview
 @Composable
 fun DashboardPreview() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-        ScaffoldMain(navigationController= rememberNavController(), drawerState = drawerState, user = "ele")
+        ScaffoldMain(navigationController = rememberNavController(), drawerState = drawerState, user = user.getUser)
     }
+*/

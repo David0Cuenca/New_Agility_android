@@ -1,5 +1,6 @@
-package com.example.proyect_newagility
 
+package com.example.proyect_newagility
+/*
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 
 
+*/
 /*data class Event(
     val title: String,
     val date: LocalDate,
@@ -156,20 +158,24 @@ fun CalendarDay(
             )
         }
     }
-}*/
+}*//*
 
+
+*/
 /*    val events = getProyectDetails().map {
         Event(it.name, LocalDate.parse(it.endDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")), it.projectType, it.priority)
     }
     MonthlyCalendar(events = events, onDateSelected = { selectedDate ->
         println("Selected date: $selectedDate")
-    })*/
+    })*//*
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 
 fun MonthlyCalendarPreview() {
 
-    /*Kalendar(
+    */
+/*Kalendar(
         currentDay = null,
         kalendarType = KalendarType.Firey,
         modifier = Modifier,
@@ -181,5 +187,6 @@ fun MonthlyCalendarPreview() {
         daySelectionMode = DaySelectionMode.Single,
         dayContent = null,
         headerContent = null
-    )*/
-}
+    )*//*
+
+}*/

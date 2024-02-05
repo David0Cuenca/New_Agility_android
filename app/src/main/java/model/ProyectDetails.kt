@@ -10,6 +10,17 @@ data class ProyectDetails(
     var priority: Int?
 )
 
+object Usersingleton{
+    private var actualuser: String = ""
+
+    fun setUser(newUser:String){
+        actualuser = newUser
+    }
+    fun getUserValue(): String{
+        return actualuser
+    }
+}
+
 enum class ProjectType {
     GRUPAL,
     PERSONAL,
