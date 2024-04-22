@@ -27,7 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -56,7 +56,7 @@ fun ScaffoldUser(navigationController: NavController,drawerState: DrawerState){
     val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            TopBarUser() {scope.launch { drawerState.open() }}
+            TopBarUser {scope.launch { drawerState.open() }}
         },
         content = {innerPadding ->
             BodyUser(innerPadding)
@@ -68,10 +68,11 @@ fun ScaffoldUser(navigationController: NavController,drawerState: DrawerState){
 fun TopBarUser(onClickDrawer: () -> Unit) {
     TopAppBar(
         title = { Text("Cuenta") },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = Primary,
-            actionIconContentColor = Color.White,
-            titleContentColor = Color.White),
+        colors = topAppBarColors(
+        containerColor = Primary,
+        titleContentColor = Color.White,
+        actionIconContentColor = Color.White
+    ),
         navigationIcon = {
             IconButton(onClick = { onClickDrawer() }) {
                 Icon(

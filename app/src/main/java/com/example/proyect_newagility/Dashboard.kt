@@ -28,7 +28,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -45,6 +45,7 @@ import kotlinx.coroutines.launch
 import model.Screens
 import model.Usersingleton
 import model.getProyectDetails
+import java.util.Locale
 
 
 @Composable
@@ -94,7 +95,7 @@ fun BodyDashboard(innerPaddingValues: PaddingValues, user: String){
         horizontalAlignment = Alignment.CenterHorizontally){
 
         Text(
-            text = "Bienvenido ${user.capitalize()}",
+            text = "Bienvenido ${user.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}",
             modifier = Modifier.padding(bottom = 10.dp),
             style = Typography.titleMedium,
             fontSize = 30.sp,
@@ -185,10 +186,11 @@ fun BodyCard() {
 fun TopBarNav(onClickDrawer: () -> Unit) {
     TopAppBar(
         title = { Text("Dashboard") },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = Primary,
-            actionIconContentColor = Color.White,
-            titleContentColor = Color.White),
+        colors = topAppBarColors(
+        containerColor = Primary,
+        titleContentColor = Color.White,
+        actionIconContentColor = Color.White
+    ),
         navigationIcon = {
             IconButton(onClick = { onClickDrawer() }) {
                 Icon(Icons.Filled.Menu,

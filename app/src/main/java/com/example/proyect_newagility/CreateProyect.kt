@@ -38,6 +38,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -60,27 +61,34 @@ import java.time.ZoneId
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MainCreateProyect(navController: NavController){
+fun MainCreateProyect(navController: NavController) {
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Primary)
-        .padding(8.dp)){
-        HeaderCreate(modifier = Modifier.align(Alignment.TopEnd),navController)
-        BodyCreate(modifier = Modifier.align(Alignment.Center),navController)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Primary)
+            .padding(8.dp)
+    ) {
+        HeaderCreate(modifier = Modifier.align(Alignment.TopEnd), navController)
+        BodyCreate(modifier = Modifier.align(Alignment.Center), navController)
     }
 
 }
 
 
-
 @Composable
-fun HeaderCreate(modifier: Modifier,navController: NavController) {
-    Box (modifier){
+fun HeaderCreate(modifier: Modifier, navController: NavController) {
+    Box(modifier) {
         Icon(imageVector = Icons.Default.Close,
             contentDescription = "Close App",
             tint = Blue,
-            modifier = Modifier.clickable { navController.navigate(Screens.Dashboard.createRoute(Usersingleton.getUserValue())) })
+            modifier = Modifier.clickable {
+                navController.navigate(
+                    Screens.Dashboard.createRoute(
+                        Usersingleton.getUserValue()
+                    )
+                )
+            })
     }
 }
 
@@ -93,7 +101,8 @@ fun BodyCreate(modifier: Modifier, navController: NavController) {
             .fillMaxWidth()
             .wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceAround) {
+        verticalArrangement = Arrangement.SpaceAround
+    ) {
         NameCreate()
         PriorityAndTypeChecker()
         DatePickerUtility()
@@ -118,14 +127,13 @@ fun BtnConfirmCreate(navController: NavController) {
 }
 
 
-
 //Body Components
 @Composable
-fun NameCreate(){
+fun NameCreate() {
     var name by rememberSaveable { mutableStateOf("") }
     TextField(
         value = name,
-        onValueChange ={ name = it },
+        onValueChange = { name = it },
         maxLines = 1,
         singleLine = true,
         label = { Text("Nombre del Proyecto") },
@@ -138,12 +146,12 @@ fun NameCreate(){
             unfocusedLabelColor = Blue
         ),
         modifier = Modifier.fillMaxWidth(),
-        )
+    )
 
 }
 
 @Composable
-fun PriorityAndTypeChecker(){
+fun PriorityAndTypeChecker() {
     val checkedState = remember { mutableStateOf(false) }
 
     Row(
@@ -154,7 +162,7 @@ fun PriorityAndTypeChecker(){
             },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
-        ) {
+    ) {
         Checkbox(
             checked = checkedState.value,
             onCheckedChange = {
@@ -222,14 +230,14 @@ fun PriorityAndTypeChecker(){
 
 
     if (checkedState.value) {
-        Column (
+        Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
-        ){
-            var sliderPositions by remember { mutableStateOf(5f) }
+        ) {
+            var sliderPositions by remember { mutableFloatStateOf(5f) }
             Slider(
                 value = sliderPositions,
-                onValueChange = {sliderPositions = it},
+                onValueChange = { sliderPositions = it },
                 valueRange = 0f..10f,
                 steps = 10,
                 colors = SliderDefaults.colors(
@@ -256,9 +264,9 @@ fun DatePickerUtility() {
         onClick = {
             showDialoge = true
         }) {
-        Text(text = "Fecha final del proyecto", color= Blue)
+        Text(text = "Fecha final del proyecto", color = Blue)
     }
-    if(showDialoge) {
+    if (showDialoge) {
         DatePickerDialog(
             onDismissRequest = { false },
             confirmButton = {
@@ -285,14 +293,17 @@ fun DatePickerUtility() {
     date?.let {
         SpacerGeneral()
         val localDate = Instant.ofEpochMilli(it).atZone(ZoneId.of("UTC")).toLocalDate()
-        Text(text = "Fecha Seleccionada: ${localDate.dayOfMonth}/${localDate.monthValue}/${localDate.year}",
-            color = Blue)
+        Text(
+            text = "Fecha Seleccionada: ${localDate.dayOfMonth}/${localDate.monthValue}/${localDate.year}",
+            color = Blue
+        )
     }
 
 }
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun MainCreateProyectPreview(){
+fun MainCreateProyectPreview() {
     MainCreateProyect(navController = rememberNavController())
 }

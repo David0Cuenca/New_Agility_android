@@ -2,7 +2,6 @@ package model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
-
 data class ProyectDetails(
     var name: String,
     var endDate: String,
